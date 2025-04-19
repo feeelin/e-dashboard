@@ -12,16 +12,16 @@ namespace Tulahack.API.Services;
 
 public interface IAccountService
 {
-    Task<PersonBase?> GetAccount(Guid userId);
+    Task<Account?> GetAccount(Guid userId);
     Task<ManagerDto?> GetManagerDetails(Guid userId);
 
     Task<PersonBaseDto?> UpdateAccount(PersonBaseDto dto);
 
-    Task<PersonBase> CreateAccount(string jwt);
+    Task<Account> CreateAccount(string jwt);
     Task<PersonBaseDto?> CreateAccount(PersonBaseDto dto);
 
-    Task<PersonBase?> DeleteAccount(Guid getUserId);
-    Task<PersonBase> RefreshAccess(string jwt);
+    Task<Account?> DeleteAccount(Guid getUserId);
+    Task<Account> RefreshAccess(string jwt);
     Task<ManagerDto?> UpdateManager(ManagerDto dto);
 }
 
@@ -46,10 +46,10 @@ public class AccountService : IAccountService
         throw new NotImplementedException();
     }
 
-    public async Task<PersonBase> RefreshAccess(string jwt)
+    public async Task<Account> RefreshAccess(string jwt)
     {
         JwtSecurityToken token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
-        PersonBase user = _tulahackContext.Accounts
+        Account user = _tulahackContext.Accounts
             .AsTracking()
             .First(item => item.Id == Guid.Parse(token.Subject));
 
@@ -63,11 +63,11 @@ public class AccountService : IAccountService
         throw new NotImplementedException();
     }
 
-    public async Task<PersonBase> CreateAccount(string jwt)
+    public async Task<Account> CreateAccount(string jwt)
     {
         JwtSecurityToken token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
 
-        var user = new PersonBase
+        var user = new Account
         {
             Id = Guid.Parse(token.Subject),
             Firstname = token.Claims.First(item => item.Type == "given_name").Value,
@@ -101,9 +101,9 @@ public class AccountService : IAccountService
         return result;
     }
     
-    public async Task<PersonBase?> GetAccount(Guid userId)
+    public async Task<Account?> GetAccount(Guid userId)
     {
-        PersonBase? account = await _tulahackContext
+        Account? account = await _tulahackContext
             .Accounts
             .FirstOrDefaultAsync(user => user.Id == userId);
 
@@ -116,7 +116,7 @@ public class AccountService : IAccountService
     }
 
 
-    public Task<PersonBase?> DeleteAccount(Guid getUserId)
+    public Task<Account?> DeleteAccount(Guid getUserId)
     {
         throw new NotImplementedException();
     }

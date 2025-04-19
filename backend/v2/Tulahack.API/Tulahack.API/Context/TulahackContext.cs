@@ -6,9 +6,14 @@ namespace Tulahack.API.Context;
 
 public class TulahackContext : DbContext, ITulahackContext
 {
-    public DbSet<PersonBase> Accounts { get; set; }
+    public DbSet<Account> Accounts { get; set; }
     public DbSet<Manager> Managers { get; set; }
     public DbSet<StorageFile> StorageFiles { get; set; }
+    
+    public DbSet<Project> Projects { get; set; }
+    public DbSet<ProjectTask> ProjectTasks { get; set; }
+    public DbSet<Team> Teams { get; set; }
+    public DbSet<TimelineItem> TimelineItems { get; set; }
 
     Task ITulahackContext.SaveChangesAsync() => SaveChangesAsync();
     Task ITulahackContext.SaveChangesAsync(CancellationToken cancellationToken) => SaveChangesAsync(cancellationToken);
@@ -48,12 +53,12 @@ public class TulahackContext : DbContext, ITulahackContext
 
         // Table-per-hierarchy and discriminator configuration
         // Single table 'Accounts' for PersonBase, Contestant, Expert and Moderator entities
-        _ = modelBuilder.Entity<PersonBase>()
+        _ = modelBuilder.Entity<Account>()
             .HasDiscriminator(item => item.Role)
-            .HasValue<PersonBase>(TulahackRole.Visitor)
+            .HasValue<Account>(TulahackRole.Visitor)
             .HasValue<Manager>(TulahackRole.Manager)
             .HasValue<Superuser>(TulahackRole.Superuser);
-        _ = modelBuilder.Entity<PersonBase>()
+        _ = modelBuilder.Entity<Account>()
             .ToTable("Accounts")
             .Property(p => p.Id)
             .ValueGeneratedOnAdd();
@@ -61,8 +66,8 @@ public class TulahackContext : DbContext, ITulahackContext
         _ = modelBuilder.Entity<Superuser>();
 
         // ugly hack to enable inherited model type mutation
-        modelBuilder.Entity<PersonBase>()
-            .Property<TulahackRole>(nameof(PersonBase.Role))
+        modelBuilder.Entity<Account>()
+            .Property<TulahackRole>(nameof(Account.Role))
             .Metadata
             .SetAfterSaveBehavior(PropertySaveBehavior.Save);
         _ = modelBuilder.Entity<StorageFile>()

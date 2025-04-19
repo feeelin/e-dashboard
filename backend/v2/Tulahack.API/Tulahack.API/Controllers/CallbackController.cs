@@ -13,7 +13,7 @@ namespace Tulahack.API.Controllers;
 [ApiController]
 [Authorize(Policy = "Public+")]
 [Route("api/callback")]
-[ProducesResponseType(typeof(PersonBase), StatusCodes.Status200OK)]
+[ProducesResponseType(typeof(Account), StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status302Found)]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -31,7 +31,7 @@ public class CallbackController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(PersonBase), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Account), StatusCodes.Status200OK)]
     public async Task<IActionResult> Register()
     {
         Claim ssoUserClaim = HttpContext.User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier);
@@ -44,7 +44,7 @@ public class CallbackController : ControllerBase
             return Forbid("Incoming JwT token is in invalid format");
         }
 
-        PersonBase user = await _accountService.GetAccount(userId) ?? await _accountService.CreateAccount(jwt);
+        Account user = await _accountService.GetAccount(userId) ?? await _accountService.CreateAccount(jwt);
 
         if (user.Role != jwt.GetRole())
         {

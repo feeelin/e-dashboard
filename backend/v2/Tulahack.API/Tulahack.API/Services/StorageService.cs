@@ -33,7 +33,7 @@ public class StorageService : IStorageService
         _logger = logger;
     }
 
-    private async Task<Guid> GetStorageId(PersonBase person)
+    private async Task<Guid> GetStorageId(Account person)
     {
         switch (person.Role)
         {
@@ -56,7 +56,7 @@ public class StorageService : IStorageService
     {
         _logger.LogInformation("got a new file");
 
-        PersonBase? userAccount = await _accountService.GetAccount(userId);
+        Account? userAccount = await _accountService.GetAccount(userId);
         if (userAccount is null)
         {
             throw new ValidationException("Unable to find user account in DB, re-login and try again");
@@ -99,7 +99,7 @@ public class StorageService : IStorageService
     {
         _logger.LogInformation("Got a new file");
 
-        PersonBase? userAccount = await _accountService.GetAccount(userId);
+        Account? userAccount = await _accountService.GetAccount(userId);
         if (userAccount is null)
             throw new ValidationException("Unable to find user account in DB, re-login and try again");
 

@@ -5,9 +5,14 @@ namespace Tulahack.API.Context;
 
 public interface ITulahackContext
 {
-    public DbSet<PersonBase> Accounts { get; set; }
+    public DbSet<Account> Accounts { get; set; }
     public DbSet<Manager> Managers { get; set; }
     public DbSet<StorageFile> StorageFiles { get; set; }
+    
+    public DbSet<Project> Projects { get; set; }
+    public DbSet<ProjectTask> ProjectTasks { get; set; }
+    public DbSet<Team> Teams { get; set; }
+    public DbSet<TimelineItem> TimelineItems { get; set; }
 
     public Task SaveChangesAsync();
     public Task SaveChangesAsync(CancellationToken cancellationToken);

@@ -15,15 +15,15 @@ public enum FilePurposeType
 
 public partial class StorageFile
 {
-    public System.Guid Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Filename { get; set; }
 
     public string Filepath { get; set; }
 
-    public System.Guid Owner { get; set; }
+    public Guid Owner { get; set; }
 
-    public System.DateTime CreationDate { get; set; }
+    public DateTime CreationDate { get; set; }
 
     public int Revision { get; set; }
 

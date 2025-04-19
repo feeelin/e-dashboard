@@ -26,7 +26,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(typeof(PersonBaseDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get()
     {
-        PersonBase? user = await _accountService.GetAccount(HttpContext.User.GetUserId());
+        Account? user = await _accountService.GetAccount(HttpContext.User.GetUserId());
         if (user is null)
         {
             return NotFound();
@@ -93,7 +93,7 @@ public class AccountController : ControllerBase
     [ProducesResponseType(typeof(PersonBaseDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Delete()
     {
-        PersonBase? user = await _accountService.DeleteAccount(HttpContext.User.GetUserId());
+        Account? user = await _accountService.DeleteAccount(HttpContext.User.GetUserId());
         if (user is null)
         {
             return NotFound();

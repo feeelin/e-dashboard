@@ -1,8 +1,8 @@
 namespace Tulahack.API.Models;
 
-public class PersonBase
+public class Account
 {
-    public System.Guid Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Firstname { get; set; }
 
@@ -25,6 +25,6 @@ public class PersonBase
     public TulahackRole Role { get; set; }
 }
 
-public class Superuser : PersonBase
+public class Superuser : Account
 {
 }

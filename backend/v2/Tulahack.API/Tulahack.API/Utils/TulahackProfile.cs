@@ -8,10 +8,10 @@ public class TulahackProfile : Profile
 {
     public TulahackProfile()
     {
-        CreateMap<PersonBase, Manager>(MemberList.None);
-        CreateMap<PersonBase, Superuser>(MemberList.None);
+        CreateMap<Account, Manager>(MemberList.None);
+        CreateMap<Account, Superuser>(MemberList.None);
 
-        CreateMap<PersonBase, PersonBaseDto>();
+        CreateMap<Account, PersonBaseDto>();
         CreateMap<Manager, ManagerDto>();
     }
 }
