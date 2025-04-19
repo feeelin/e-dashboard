@@ -1,0 +1,21 @@
+@import '../../shared/colors.scss';
+.tabs {
+  font-weight: bold;
+  margin: 0 62px;
+  padding: 23px;
+
+  //background-color: $secondary-color;
+}
+
+.titleProject {
+  font-size: 23px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.wrap {
+  width: max-content;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 62px;
+}

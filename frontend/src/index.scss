@@ -1,0 +1,21 @@
+@import 'shared/colors.scss';
+:root * {
+  font-family: Play, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: $text-color;
+}
+
+a {
+  font-weight: 500;
+  /*color: #646cff;*/
+  text-decoration: inherit;
+}
+a:hover {
+  color: $accent-color;
+}
+
+body {
+  margin: 0;
+}

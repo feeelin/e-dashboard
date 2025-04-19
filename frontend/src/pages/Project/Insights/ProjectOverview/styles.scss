@@ -1,0 +1,18 @@
+@import '../../../../shared/colors.scss';
+
+.card {
+  width: 100%;
+  margin: 10px 0;
+}
+.card-top {
+  min-width: max-content;
+  width: 12rem;
+  margin: 10px 0;
+  background-color: #F8F8F8;
+  border: none;
+}
+
+.digit {
+  font-size: 24px;
+  font-weight: bold;
+}

@@ -1,0 +1,15 @@
+.header {
+  width: 100vw;
+  height: 60px;
+  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.3);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 50px;
+}
+
+.logo {
+  cursor: pointer;
+}
