@@ -1,0 +1,7 @@
+﻿services:
+  dashboard.api:
+    image: dashboard.api
+    build:
+      context: .
+      dockerfile: Tulahack.API/Dockerfile
+

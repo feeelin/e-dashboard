@@ -1,0 +1,88 @@
+version: '3'
+
+services:
+  jira:
+    image: atlassian/jira-software:latest
+    depends_on:
+      - jira-postgres
+    volumes:
+      - jiradata:/var/atlassian/jira
+    ports:
+      - '8000:8080'
+    environment:
+      - 'JIRA_DATABASE_URL=postgresql://jira@localhost:5432/jiradb'
+      - 'JIRA_DB_PASSWORD=eureka_team'
+      - 'SETENV_JVM_MINIMUM_MEMORY=2048m'
+      - 'SETENV_JVM_MAXIMUM_MEMORY=4096m'
+      - 'JIRA_PROXY_NAME='
+      - 'JIRA_PROXY_PORT='
+      - 'JIRA_PROXY_SCHEME='
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+
+  jira-postgres:
+    image: postgres:latest
+    volumes:
+      - jira_postgresql_data:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_USER=jira'
+      - 'POSTGRES_PASSWORD=eureka_team'
+      - 'POSTGRES_DB=jiradb'
+      - 'POSTGRES_ENCODING=UNICODE'
+      - 'POSTGRES_COLLATE=C'
+      - 'POSTGRES_COLLATE_TYPE=C'
+    ports:
+      - "5431:5432"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+
+  postgres:
+      image: postgres:latest
+      container_name: postgres_db
+      environment:
+        POSTGRES_USER: "postgres"
+        POSTGRES_PASSWORD: "password"
+        POSTGRES_DB: "postgres_db"
+        PGDATA: /var/lib/postgresql/data
+      ports:
+        - "5432:5432"
+      volumes:
+        - /pgdata:/var/lib/postgresql/data
+      deploy:
+        resources:
+          limits:
+            cpus: '0.50'
+            memory: 512M
+          reservations:
+            cpus: '0.25'
+            memory: 256M
+      command: >
+        postgres -c max_connections=1000
+                 -c shared_buffers=256MB
+                 -c effective_cache_size=768MB
+                 -c maintenance_work_mem=64MB
+                 -c checkpoint_completion_target=0.7
+                 -c wal_buffers=16MB
+                 -c default_statistics_target=100
+      healthcheck:
+        test: [ "CMD-SHELL", "pg_isready -U postgres_user -d postgres_db" ]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+      restart: unless-stopped
+      tty: true
+      stdin_open: true
+
+volumes:
+  jiradata:
+    external: false
+  jira_postgresql_data:
+    external: false
+  pgdata:
+    driver: local
