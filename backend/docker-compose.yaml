@@ -2,17 +2,15 @@ version: '3'
 
 services:
   jira:
+    image: atlassian/jira-software:latest
     depends_on:
       - jira-postgres
-    image: teamatldocker/jira
-    networks:
-      - jira_net
     volumes:
       - jiradata:/var/atlassian/jira
     ports:
-      - '80:8080'
+      - '8000:8080'
     environment:
-      - 'JIRA_DATABASE_URL=postgresql://jira@jira-postgres/jiradb'
+      - 'JIRA_DATABASE_URL=postgresql://jira@localhost:5432/jiradb'
       - 'JIRA_DB_PASSWORD=eureka_team'
       - 'SETENV_JVM_MINIMUM_MEMORY=2048m'
       - 'SETENV_JVM_MAXIMUM_MEMORY=4096m'
@@ -26,9 +24,7 @@ services:
         max-file: "50"
 
   jira-postgres:
-    image: postgres:9.5-alpine
-    networks:
-      - jira_net
+    image: postgres:latest
     volumes:
       - jira_postgresql_data:/var/lib/postgresql/data
     environment:
@@ -38,6 +34,8 @@ services:
       - 'POSTGRES_ENCODING=UNICODE'
       - 'POSTGRES_COLLATE=C'
       - 'POSTGRES_COLLATE_TYPE=C'
+    ports:
+      - "5431:5432"
     logging:
       driver: "json-file"
       options:
@@ -46,7 +44,7 @@ services:
 
   postgres:
       image: postgres:latest
-      container_name: postgres_container
+      container_name: postgres
       environment:
         POSTGRES_USER: "postgres"
         POSTGRES_PASSWORD: "password"
@@ -88,7 +86,3 @@ volumes:
     external: false
   pgdata:
     driver: local
-
-networks:
-  jira_net:
-    driver: bridge
