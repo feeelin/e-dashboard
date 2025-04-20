@@ -39,6 +39,7 @@ public class Project
     
     public string TimelineLabel { get; set; }
     public ICollection<TimelineItem> TimelineItems { get; set; }
+    public ICollection<CapacityForecastItem> CapacityForecastItems { get; set; }
     
     public ProjectStatus Status { get; set; }
     

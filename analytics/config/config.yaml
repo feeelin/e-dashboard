@@ -1,0 +1,33 @@
+# --- Data Schema ---
+jira_field_names:
+  story_points: "customfield_10016" # Custom field ID for Story Points
+  sprint: "customfield_10020"       # Custom field ID for Sprint
+
+# --- Status Mapping ---
+status_mapping:
+  todo: ["To Do", "Open", "Backlog"]
+  inprogress: ["In Progress", "In Development", "In Review"]
+  done: ["Done", "Closed", "Resolved"]
+
+# --- Modeling ---
+velocity_model:
+  target_metric: "actual_velocity"
+  features:
+    # List will be populated/overridden during training potentially
+    - "avg_velocity_last_1_sprints"
+    - "avg_velocity_last_3_sprints"
+    - "planned_story_points"
+    - "planned_issue_count"
+  model_params: # GradientBoostingRegressor
+    n_estimators: 100
+    learning_rate: 0.1
+    max_depth: 3
+    random_state: 42
+
+# --- File Paths (Relative to project root) ---
+paths:
+  raw_data_dir: "data/raw" # Not used with mock data gen directly, but good practice
+  processed_data_dir: "data/processed"
+  features_dir: "data/features"
+  models_dir: "models"
+  log_file: "logs/forecast.log" # Logging file path
