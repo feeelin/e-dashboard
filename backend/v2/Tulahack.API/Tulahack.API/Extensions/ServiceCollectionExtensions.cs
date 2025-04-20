@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IDashboardService, DashboardService>();
         services.AddTransient<IStorageService, StorageService>();
         services.AddTransient<ITaskService, TaskService>();
+        services.AddTransient<IContestService, ContestService>();
     }
 
     public static void AddCustomSwagger(this IServiceCollection services) =>
