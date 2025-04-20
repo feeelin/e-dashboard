@@ -1,3 +1,5 @@
+
+
 dotnet ef migrations add InitialMigration `
 --startup-project Tulahack.API `
 --context TulahackContext `
