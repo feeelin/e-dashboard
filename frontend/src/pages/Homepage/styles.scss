@@ -8,6 +8,12 @@
 
 .title {
   font-weight: bold;
-  margin: 0 62px;
+  margin: 0 60px;
   padding: 23px;
+}
+
+.button {
+  background-color: $primary-color;
+  width: 118px;
+  height: 26px;
 }

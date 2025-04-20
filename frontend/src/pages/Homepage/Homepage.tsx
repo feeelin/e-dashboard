@@ -1,12 +1,10 @@
-import {Table} from 'antd'
+import {Button, Flex, Table} from 'antd'
 import'./styles.scss'
 import {Link} from "react-router-dom";
 import {mockProjectsData} from "../../mockData/mockProjectsData.ts";
 import {getAllProjects} from "../../shared/api.ts";
 
-const projects = getAllProjects()
-  .then(r => r.estimationSummary)
-
+// const projects = getAllProjects()
 
 const columns = [
   {
@@ -46,7 +44,11 @@ const projectsCount = mockProjectsData.length;
 const Homepage = () => {
   return (
     <div>
-      <h3 className={'title'}>{projectsCount} {projectsCount > 1 ? 'Projects': 'Project' }</h3>
+      <Flex align={'center'} >
+        <span className={'title'}>{projectsCount} {projectsCount > 1 ? 'Projects' : 'Project'}</span>
+        <Button color={"cyan"} className={'button'}>Create project</Button>
+      </Flex>
+
       <div className={'table'}>
         <Table dataSource={mockProjectsData} columns={columns}></Table>
       </div>
